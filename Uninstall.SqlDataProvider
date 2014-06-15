@@ -1,0 +1,25 @@
+-- NOTE: To manually execute this script you must 
+-- replace {databaseOwner} and {objectQualifier} with real values. 
+-- Defaults is "dbo." for database owner and "" for object qualifier 
+
+-- Drop tables
+
+ALTER TABLE {databaseOwner}[{objectQualifier}DocumRoller_DocumRollers] 
+	DROP CONSTRAINT [FK_{objectQualifier}DocumRoller_DocumRollers_{objectQualifier}Modules]
+GO
+
+ALTER TABLE {databaseOwner}[{objectQualifier}DocumRoller_DocumRollers] 
+	DROP CONSTRAINT [PK_{objectQualifier}DocumRoller_DocumRollers]
+GO
+
+DROP INDEX {databaseOwner}[{objectQualifier}DocumRoller_DocumRollers].[IX_{objectQualifier}DocumRoller_DocumRollers_ModuleID]
+GO
+
+DROP TABLE {databaseOwner}[{objectQualifier}DocumRoller_DocumRollers]
+GO
+
+-- Drop stored procedures
+
+-- DROP PROCEDURE {databaseOwner}[{objectQualifier}DocumRoller_GetDocumRollers]
+-- GO
+
