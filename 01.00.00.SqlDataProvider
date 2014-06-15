@@ -1,0 +1,55 @@
+-- NOTE: To manually execute this script you must 
+-- replace {databaseOwner} and {objectQualifier} with real values. 
+-- Defaults is "dbo." for database owner and "" for object qualifier 
+
+-- Create tables
+
+IF NOT EXISTS (select * from dbo.sysobjects where id = object_id(N'{databaseOwner}[{objectQualifier}DocumRoller_DocumRollers]') and OBJECTPROPERTY(id, N'IsTable') = 1)
+	BEGIN
+		CREATE TABLE {databaseOwner}[{objectQualifier}DocumRoller_DocumRollers]
+		(
+			[DocumRollerID] int NOT NULL IDENTITY(1, 1),
+			[ModuleID] int NOT NULL,
+			[Content] nvarchar(max) NOT NULL,
+			[CreatedByUser] int NOT NULL,
+			[CreatedOnDate] datetime NOT NULL
+		)
+
+		ALTER TABLE {databaseOwner}[{objectQualifier}DocumRoller_DocumRollers] 
+			ADD CONSTRAINT [PK_{objectQualifier}DocumRoller_DocumRollers] PRIMARY KEY CLUSTERED  ([DocumRollerID])
+			
+		CREATE NONCLUSTERED INDEX [IX_{objectQualifier}DocumRoller_DocumRollers_ModuleID] 
+			ON {databaseOwner}[{objectQualifier}DocumRoller_DocumRollers] ([ModuleID])
+
+		ALTER TABLE {databaseOwner}[{objectQualifier}DocumRoller_DocumRollers] WITH NOCHECK 
+			ADD CONSTRAINT [FK_{objectQualifier}DocumRoller_DocumRollers_{objectQualifier}Modules] FOREIGN KEY ([ModuleID]) REFERENCES {databaseOwner}[{objectQualifier}Modules] ([ModuleID]) ON DELETE CASCADE NOT FOR REPLICATION
+			
+		ALTER TABLE {databaseOwner}[{objectQualifier}DocumRoller_DocumRollers] 
+			ADD CONSTRAINT [DF_{objectQualifier}DocumRoller_DocumRollers_CreatedOnDate] DEFAULT (getdate()) FOR [CreatedOnDate]
+	END
+GO
+
+-- Drop existing stored procedures
+
+---- Just example:
+-- IF EXISTS (select * from dbo.sysobjects where id = object_id(N'{databaseOwner}[{objectQualifier}DocumRoller_GetDocumRollers]') and OBJECTPROPERTY(id, N'IsProcedure') = 1)
+--	DROP PROCEDURE {databaseOwner}{objectQualifier}DocumRoller_GetDocumRollers
+-- GO
+
+-- Create stored procedures
+
+---- Just example:
+-- CREATE PROCEDURE {databaseOwner}{objectQualifier}DocumRoller_GetDocumRollers
+--	@ModuleId int
+-- AS 
+-- SELECT [DocumRollerID]
+--	[ModuleID],
+--	[Content],
+--	[CreatedByUser],
+--	[CreatedOnDate],
+--	'CreatedByUserName' = {objectQualifier}Users.FirstName + ' ' + {objectQualifier}Users.LastName
+-- FROM {objectQualifier}DocumRoller_DocumRollers
+-- INNER JOIN {objectQualifier}Users on {objectQualifier}DocumRoller_DocumRollers.CreatedByUser = {objectQualifier}Users.UserId
+-- WHERE [ModuleID] = @ModuleId
+-- GO
+
