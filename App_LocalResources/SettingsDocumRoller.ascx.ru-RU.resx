@@ -1,0 +1,40 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <data name="lblTemplate.Text" xml:space="preserve">
+    <value>Шаблон</value>
+  </data>
+  <data name="lblTemplate.Help" xml:space="preserve">
+    <value>Позволяет задать пользовательский шаблон для отображения элементов. Используйте параметры для замены: [CONTENT] [CREATEDONDATE] [CREATEDBYUSER] [CREATEDBYUSERNAME]</value>
+  </data>
+  <data name="ControlTitle_settings.Text" xml:space="preserve">
+    <value>Настройки DocumRoller</value>
+  </data>
+  <data name="ModuleHelp.Text" xml:space="preserve">
+    <value>О настройках DocumRoller</value>
+  </data>
+   <data name="lblItemToShow.Text" xml:space="preserve">
+    <value>Количество строк</value>
+  </data>
+  <data name="lblItemToShow.Help" xml:space="preserve">
+    <value>Укажите количество элементов для отображения</value>
+  </data>
+   <data name="lblSortField.Text" xml:space="preserve">
+    <value>Сортировка</value>
+  </data>
+  <data name="lblSortField.Help" xml:space="preserve">
+    <value>Будет произведена сортировка элементов по дате или названию</value>
+  </data>
+  <data name="lblSortOrder.Text" xml:space="preserve">
+    <value>Порядок сортировки</value>
+  </data>
+ 
+ <data name="ddlSortFieldItem1.Text" xml:space="preserve">
+    <value>по дате</value>
+    </data>
+    <data name="ddlSortFieldItem2.Text" xml:space="preserve">
+    <value>по названию</value>
+    </data>
+ 
+ 
+ 
+</root>

@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+	<data name="lblTemplate.Text" xml:space="preserve">
+    <value>Template</value>
+  </data>
+	<data name="lblTemplate.Help" xml:space="preserve">
+    <value>Allows you to provide a custom template for displaying the items. Use parameters for dynamic substitution ( ie. [CONTENT] [CREATEDONDATE] [CREATEDBYUSER] [CREATEDBYUSERNAME] )</value>
+  </data>
+	<data name="ControlTitle_settings.Text" xml:space="preserve">
+    <value>DocumRoller Settings</value>
+  </data>
+	<data name="ModuleHelp.Text" xml:space="preserve">
+    <value>About DocumRoller Settings</value>
+  </data>
+   <data name="lblItemToShow.Text" xml:space="preserve">
+    <value>ItemToShow</value>
+    </data>
+    <data name="lblItemToShow.Help" xml:space="preserve">
+    <value>Specify the number of items to display</value>
+  </data>
+  <data name="lblSortField.Text" xml:space="preserve">
+    <value>SortField</value>
+    </data>
+    <data name="lblSortField.Help" xml:space="preserve">
+    <value>Items will be sorted by date or by title</value>
+  </data>
+  <data name="lblSortOrder.Text" xml:space="preserve">
+    <value>SortOrder</value>
+    </data>
+    
+    <data name="ddlSortFieldItem1.Text" xml:space="preserve">
+    <value>createddate</value>
+    </data>
+    <data name="ddlSortFieldItem2.Text" xml:space="preserve">
+    <value>title</value>
+    </data>
+    
+    
+    
+    
+</root>
