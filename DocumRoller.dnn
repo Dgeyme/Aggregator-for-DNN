@@ -19,6 +19,12 @@
               <helpurl></helpurl>
             </control>
             <control>
+              <key>RSS</key>
+              <src>DesktopModules/DocumRoller/RSS.ascx</src>
+              <type>View</type>
+              <helpurl></helpurl>
+            </control>
+            <control>
               <key>Edit</key>
               <title>Edit Content</title>
               <src>DesktopModules/DocumRoller/EditDocumRoller.ascx</src>
