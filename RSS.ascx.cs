@@ -100,12 +100,30 @@ namespace DocumRoller
 						//var items = ctrl.GetList<DocumRollerInfo> (this.ModuleId);
 						var docrollers = ctrl.GetObjects<DocRollerInfo> (System.Data.CommandType.StoredProcedure, 
 						                                                 "dbo.Aggregator_GetContent" , settings.ItemToShow, settings.SortOrder);
-						// labeltest.Text = Server.HtmlEncode(ToRss (language, title, description));
+						
+						
+					string rss_dname = Path.Combine(PortalSettings.HomeDirectoryMapPath, "Cache");
+                    if (!Directory.Exists(rss_dname))
+                        Directory.CreateDirectory(rss_dname);
+
+                    // формируем имя файла кеша rss для нашего модуля
+                    string rssfile_fullname = Path.Combine(
+                        rss_dname,
+                        String.Format("Feed_{0}.xml", ModuleId));
+						
+					
+						File.WriteAllText(rssfile_fullname, ToRss(docrollers, language, title, description));
+
+						Response.Redirect("http://" + PortalSettings.PortalAlias.HTTPAlias +
+							"/Portals/"+ PortalId +"/Cache/" + string.Format("Feed_{0}.xml", ModuleId), true);
+						// labe.11st.Text = Server.HtmlEncode(ToRss (language, title, description));
+					/*
 						Response.Clear ();
 						Response.ContentType = "application/rss+xml";
 						Response.Write (ToRss(docrollers, language, title, description));
 						Response.Flush ();
-						Response.Close ();
+						Response.Close ();*/
+						
 					}
 				}
 			}
