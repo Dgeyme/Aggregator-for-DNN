@@ -2,7 +2,7 @@
 -- replace {databaseOwner} and {objectQualifier} with real values. 
 -- Defaults is "dbo." for database owner and "" for object qualifier 
 
--- Create tables
+-- Create tables 
 
 IF NOT EXISTS (select * from dbo.sysobjects where id = object_id(N'{databaseOwner}[{objectQualifier}DocumRoller_DocumRollers]') and OBJECTPROPERTY(id, N'IsTable') = 1)
 	BEGIN
@@ -29,27 +29,65 @@ IF NOT EXISTS (select * from dbo.sysobjects where id = object_id(N'{databaseOwne
 	END
 GO
 
+-- Drop existing views
+
+IF EXISTS (select * from dbo.sysobjects where id = object_id(N'{databaseOwner}[{objectQualifier}vw_Aggregator_ContentItems]') and OBJECTPROPERTY(id, N'IsView') = 1)
+  DROP VIEW {databaseOwner}[{objectQualifier}vw_Aggregator_ContentItems]
+GO
+
+-- Create views
+
+--IF NOT EXISTS (select * from dbo.sysobjects where id = object_id(N'{databaseOwner}[{objectQualifier}vw_Aggregator_ContentItems]') and OBJECTPROPERTY(id, N'IsView') = 1)
+--   BEGIN
+      CREATE VIEW {databaseOwner}[{objectQualifier}vw_Aggregator_ContentItems]
+      AS
+      SELECT     dbo.ContentItems.*, dbo.ContentTypes.ContentTypeID AS Expr1, 
+                            dbo.ContentTypes.ContentType
+      FROM         dbo.ContentItems INNER JOIN
+                            dbo.ContentTypes ON dbo.ContentItems.ContentTypeID = dbo.ContentTypes.ContentTypeID
+         WHERE     (dbo.ContentTypes.ContentType IN (N'Tab', N'Module', N'DNNCorp_JournalProfile', N'DNN_Blog_Post'))
+--   END
+GO
+
 -- Drop existing stored procedures
 
----- Just example:
--- IF EXISTS (select * from dbo.sysobjects where id = object_id(N'{databaseOwner}[{objectQualifier}DocumRoller_GetDocumRollers]') and OBJECTPROPERTY(id, N'IsProcedure') = 1)
---	DROP PROCEDURE {databaseOwner}{objectQualifier}DocumRoller_GetDocumRollers
--- GO
+IF EXISTS (select * from dbo.sysobjects where id = object_id(N'{databaseOwner}[{objectQualifier}Aggregator_GetContent]') and OBJECTPROPERTY(id, N'IsProcedure') = 1)
+   DROP PROCEDURE {databaseOwner}[{objectQualifier}Aggregator_GetContent]
+GO
 
 -- Create stored procedures
 
----- Just example:
--- CREATE PROCEDURE {databaseOwner}{objectQualifier}DocumRoller_GetDocumRollers
---	@ModuleId int
--- AS 
--- SELECT [DocumRollerID]
---	[ModuleID],
---	[Content],
---	[CreatedByUser],
---	[CreatedOnDate],
---	'CreatedByUserName' = {objectQualifier}Users.FirstName + ' ' + {objectQualifier}Users.LastName
--- FROM {objectQualifier}DocumRoller_DocumRollers
--- INNER JOIN {objectQualifier}Users on {objectQualifier}DocumRoller_DocumRollers.CreatedByUser = {objectQualifier}Users.UserId
--- WHERE [ModuleID] = @ModuleId
--- GO
+CREATE PROCEDURE {databaseOwner}[{objectQualifier}Aggregator_GetContent] 
+	-- Add the parameters for the stored procedure here
+	@ItemToShow int, 
+	@SortOrder bit
+	
+	
+AS
+BEGIN
+	-- SET NOCOUNT ON added to prevent extra result sets from
+	-- interfering with SELECT statements.
+	SET NOCOUNT ON;
+IF (@SortOrder = 1)
+    begin
+    --   SET @SortOrderStr=N'ASC'; 
+    SELECT TOP (@ItemToShow) D.* 
+    FROM {databaseOwner}[{objectQualifier}vw_Aggregator_ContentItems] as D
+    Order BY   CreatedOnDate   ASC;
+    
+    end
+  
+    else 
+    begin
+    --   SET @SortOrderStr=N'DESC'; 
+    SELECT TOP (@ItemToShow) D.* 
+    FROM {databaseOwner}[{objectQualifier}vw_Aggregator_ContentItems] as D
+    Order BY  CreatedOnDate  DESC;
+    
+    end
+    
+    -- Insert statements for procedure here
+	
+END
 
+GO
